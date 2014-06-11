@@ -80,18 +80,76 @@
 			
 			$this->setPageType('form');	
 			
-			$path = extension_filebrowser::baseURL() . 'browse/';
+			$path = extension_filebrowser::baseURL() . 'browse';
 			$breadcrumb = '';
-			$pathelements = explode('/', $_GET['file']);
-			foreach($pathelements as $element) {
+			
+			$url = str_replace('\\','/',$_GET['file']);
+			$pathelements = explode('/', $url);
+			/*foreach($pathelements as $element) {
 				if($element != '') {
 					$path .= $element . '/';
 					$breadcrumb .= ' / ' . ($element == end($pathelements) ? $element : Widget::Anchor($element, $path)->generate());
 				}
+			}*/
+			$crumbs = $pathelements;
+			
+			$ArrayObject = new ArrayObject($crumbs);
+			$Iterator = $ArrayObject->getIterator();
+			
+			$crumburl = NULL;
+			$result = array();
+			$length = sizeOf($ArrayObject);
+			
+			//$link = new XMLElement('a',Widget::Anchor(ltrim('/',$FileManager->getStartLocation()), URL . '/' ));
+			//array_push($result, $link);
+			$dir = array();
+			while($Iterator->valid()){
+			
+				$key = $Iterator->key();
+				//var_dump($key);
+				$crumburl .= $Iterator->current() . '/';
+				
+				
+				
+				//var_dump($crumburl);
+				//if($key != $length-1){
+					$dir[$Iterator->current()] = $crumburl;
+					
+				//}
+				//else{
+					//$link = new XMLElement('h2',ucfirst($Iterator->current()));
+				//}
+				
+				$Iterator->next();
+				//$loc = explode('/',$crumburl);
+				//
+				
 			}
 			
-			$this->appendSubheading(trim($FileManager->getStartLocationLink(), '/') . $breadcrumb);
+			foreach($dir as $d =>$a){
+				$a = rtrim($a,"/");
+				$ext = pathinfo($d, PATHINFO_EXTENSION);
+				//var_dump($a);
+				if($d != ''){
+					$s = $d;
+				}else{
+					continue;
+				}
+				if($ext == ''){
+					$link = new XMLElement('a',Widget::Anchor(ucfirst($s), URL . '/symphony/extension/filebrowser/browse/' . $a)->generate());
+					array_push($result, $link);
+				}else{
+					$link = new XMLElement('h2',ucfirst($s));
+					array_push($result, $link);
+				}				
+				
+			}
 			
+			//die;
+			$this->insertBreadcrumbs($result);
+			//$this->appendSubheading(trim($FileManager->getStartLocationLink(), '/') . $breadcrumb);
+			//var_dump(trim($FileManager->getStartLocationLink(), '/'));
+			//die;
 			$fields = array();
 			
 			$fieldset = new XMLElement('fieldset');
