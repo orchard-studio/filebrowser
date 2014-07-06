@@ -186,7 +186,7 @@
         case 'cpp':
         case 'php':  
         case 'xml':
-		case 'less':
+		    case 'less':
           return self::CODE;          
           
         case 'avi':

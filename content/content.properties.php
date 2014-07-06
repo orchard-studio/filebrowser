@@ -1,6 +1,7 @@
 <?php
 
 	require_once(TOOLKIT . '/class.administrationpage.php');
+	require_once(TOOLKIT . '/class.xsltprocess.php');
 
 	Class contentExtensionFileBrowserProperties extends AdministrationPage{
 
@@ -18,13 +19,14 @@
 			
 			$FileManager = Symphony::ExtensionManager()->create('filebrowser');
 			$file = new File(DOCROOT . $FileManager->getStartLocation() . $_GET['file']);
-			
+
+
 			if(isset($_POST['action']['save'])){
 				$fields = $_POST['fields'];
 				
 				$file->setName($fields['name']);
-				
-				if(isset($fields['contents'])) $file->setContents($fields['contents']);
+
+				if(isset($fields['contents'])) $file->setContents(General::reverse_sanitize($fields['contents']));
 				
 				$file->setPermissions($fields['permissions']);
 				
