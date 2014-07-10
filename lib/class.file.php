@@ -187,6 +187,9 @@
         case 'php':  
         case 'xml':
 		    case 'less':
+        case 'json':
+        case 'sass':
+        case 'markdown':
           return self::CODE;          
           
         case 'avi':
