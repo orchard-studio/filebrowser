@@ -38,7 +38,7 @@
 			
 			$permission = $_POST['fields']['upload']['permissions'];
 			
-			return General::uploadFile($dest_path, $file[0], $file[2], $permission);
+			return General::uploadFile($dest_path, $file['name'], $file['tmp_name'], $permission);
 					
 		}
 		
@@ -97,9 +97,11 @@
 
 			
 			
-		/*	if(isset($_POST['action']['save'])){
+			/*if(isset($_POST['action']['save'])){
 				$fields = $_POST['fields'];
-				
+				var_dump($fields);
+				var_dump($_FILES['fields']);
+				die;
 				$file->setName($fields['name']);
 				
 				if(isset($fields['contents'])) $file->setContents($fields['contents']);
@@ -108,10 +110,13 @@
 				
 				$relpath = str_replace(DOCROOT . $FileManager->getStartLocation(), NULL, dirname($_GET['file']));
 				
-				if($file->isWritable())
-					redirect($FileManager->baseURL() . 'properties/?file=' . rtrim(dirname($_GET['file']), '/') . '/' . $file->name());
+				if($file->isWritable()){
+					//redirect($FileManager->baseURL() . 'properties/?file=' . rtrim(dirname($_GET['file']), '/') . '/' . $file->name());
 				
-				else redirect($FileManager->baseURL() . 'browse/' . $relpath);
+				}else{
+
+					//redirect($FileManager->baseURL() . 'browse/' . $relpath);
+				}
 				
 			}*/
 
@@ -119,7 +124,7 @@
 		
 		function view(){
 			
-			Administration::instance()->Page->addStylesheetToHead(URL . '/extensions/filemanager/assets/styles.css', 'screen', 70);
+			Administration::instance()->Page->addStylesheetToHead(URL . '/extensions/filebrowser/assets/styles.css', 'screen', 70);
 			
 			$FileManager = Symphony::ExtensionManager()->create('filebrowser');
 

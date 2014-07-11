@@ -1,7 +1,8 @@
 <?php
 
 	require_once(TOOLKIT . '/class.administrationpage.php');
-
+	require_once(TOOLKIT . '/class.xsltprocess.php');
+	
 	Class contentExtensionFileBrowserProperties extends AdministrationPage{
 
 		private $_FileManager;
@@ -24,8 +25,8 @@
 				
 				$file->setName($fields['name']);
 				
-				if(isset($fields['contents'])) $file->setContents($fields['contents']);
 				
+				if(isset($fields['contents'])) $file->setContents(General::reverse_sanitize($fields['contents']));
 				$file->setPermissions($fields['permissions']);
 				
 				$relpath = str_replace(DOCROOT . $FileManager->getStartLocation(), NULL, dirname($_GET['file']));

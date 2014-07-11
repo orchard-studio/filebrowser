@@ -61,11 +61,11 @@
 			$FileManager = Symphony::ExtensionManager()->create('filebrowser');
 
 			$path = DOCROOT . $FileManager->getStartLocation() . (is_array($this->_context) && !empty($this->_context) ? '/' . implode('/', $this->_context) . '/' : NULL);
-			
+			$actions = $this->Context;
 			if(is_writable($path)) {
 				// Build file/dir creation menu
 				
-				$actions = $this->Context;
+				
 				$create_menu = new XMLElement('ul');
 				$create_menu->setAttribute('class', 'actions');
 			
