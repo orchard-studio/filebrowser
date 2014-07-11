@@ -186,10 +186,13 @@
         case 'cpp':
         case 'php':  
         case 'xml':
-		    case 'less':
-        case 'json':
-        case 'sass':
-        case 'markdown':
+    		case 'less':
+    		case 'htm':
+    		case 'html':
+    		case 'sass':
+    		case 'markdown':
+    		case 'readme':
+    		case 'json':
           return self::CODE;          
           
         case 'avi':
